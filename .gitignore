@@ -1,16 +1,12 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
 env/
 build/
-develop-eggs/
+develop/
 dist/
 downloads/
 eggs/
@@ -21,36 +17,23 @@ parts/
 sdist/
 var/
 wheels/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Jupyter Notebook
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
+# Environment variables
+.env
+.venv
+venv/
+ENV/
+env.bak
+venv.bak
 
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created by editors or IDEs
-.idea/
-.vscode/
-
-# Project specific data
-Data/cleaned_data.csv
+# App Specific
+app.log
+data/*.csv
+!data/sample_data.csv
+.streamlit/config.toml
+.streamlit/secrets.toml

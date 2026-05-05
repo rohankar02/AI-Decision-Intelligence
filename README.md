@@ -1,32 +1,50 @@
-# 🍔 Food Delivery Demand Forecasting & Logistics Optimization
+# 🚀 AI-Powered Decision Intelligence System
 
-A predictive analytics framework designed to optimize delivery lead times by quantifying the impact of temporal surges and operational bottlenecks. 
+An enterprise-grade analytical platform that transforms raw business data into strategic growth recommendations using LLMs and mathematical simulations.
 
-## 📌 Executive Summary
-Accurate delivery forecasting is critical for customer retention and operational efficiency in the hyper-local delivery space. This project utilizes a **Random Forest Regressor** to predict delivery durations (`Time_taken(min)`) by isolating high-intensity temporal blocks. 
+## 🌟 Key Features
+- **Automated Data Engine**: Intelligent CSV cleaning and feature detection (Numeric, Categorical, Time-Series).
+- **KPI Analytics Engine**: Automated calculation of core business health metrics (Revenue, Churn, AOV).
+- **AI Strategic Consultant**: Leverages GPT-4 to generate narrative insights and prioritized business actions.
+- **What-If Simulation Lab**: Mathematical modeling of business decisions (e.g., Price Elasticity, Retention ROI).
+- **Interactive Dashboard**: High-fidelity Streamlit UI with Plotly visualizations.
 
-The analysis reveals that **temporal factors** (hour of day) account for over 87% of delivery time variability, highlighting the need for dynamic logistics planning during peak blocks.
+## 🏗 Architecture
+The system follows **Clean Architecture** principles to ensure modularity and scalability:
+- `src/data_engine`: Data ingestion and preprocessing.
+- `src/analytics`: Core statistical and KPI logic.
+- `src/ai_module`: LLM integration and prompt engineering.
+- `src/simulation`: Predictive mathematical modeling.
+- `src/utils`: Centralized logging and custom exception handling.
 
-## 📊 Operational Insights
+## 🛠 Tech Stack
+- **Language**: Python 3.9+
+- **Data**: Pandas, Numpy, Scikit-learn
+- **AI**: OpenAI GPT-4 API
+- **UI**: Streamlit, Plotly
+- **Observability**: Rotating File Logging, Custom Exceptions
 
-| Logistics Intelligence | Delivery Efficiency |
-| :---: | :---: |
-| ![Hourly Demand](visualizations/hourly_demand.png) | ![Daily Efficiency](visualizations/daily_efficiency.png) |
-| *Isolating peak operational blocks for capacity planning* | *Analyzing day-wise variance in delivery performance* |
+## 🚀 Quick Start
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/decision-intelligence-sys.git
+   ```
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Set your API Key**:
+   Create a `.env` file or export your key:
+   ```bash
+   export OPENAI_API_KEY='your-key-here'
+   ```
+4. **Run the application**:
+   ```bash
+   streamlit run app.py
+   ```
 
-### Strategic Heatmap: Order Intensity
-The heatmap below identifies the "Golden Hours" of delivery intensity across the week, providing a roadmap for driver shift optimization.
-
-![Demand Heatmap](visualizations/demand_heatmap.png)
-
-## 🚀 Methodology & Approach
-- **Feature Engineering:** Extraction of high-granularity temporal features (`hour`, `day`, `weekend`) from raw order timestamps.
-- **Predictive Modeling:** Implemented a **Random Forest Regressor** to capture non-linear relationships between peak hours and driver transit times.
-- **Root Cause Analysis:** Utilized feature importance rankings to identify that 87.1% of delivery delays are hour-dependent, suggesting a shift from distance-based to demand-based logistics.
-
-## 🛠️ Performance Metrics
-- **Mean Absolute Error (MAE):** 6.69 minutes
-- **Feature Weights:** `Hour` (87%), `Day` (6%), `Month` (6%).
+## 📊 Sample Insights
+> "The system identified a 15% drop in retention within the 'Electronics' segment and simulated that a 5% loyalty boost would recover $120k in projected annual revenue."
 
 ---
-*Note: This project serves as a strategic template for demand forecasting and logistics optimization in urban delivery networks.*
+*Developed for strategic business optimization.*
