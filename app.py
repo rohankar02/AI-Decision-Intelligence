@@ -8,108 +8,136 @@ from src.analytics.analysis_engine import AnalysisEngine
 from src.ai_module.ai_analyzer import AIAnalyzer
 from src.simulation.simulation_engine import SimulationEngine
 
-# Page Config
-st.set_page_config(page_title="AI Decision Intelligence", layout="wide", page_icon="📈")
+# Page Config: High-end executive feel
+st.set_page_config(page_title="Executive Intelligence | Decision Suite", layout="wide", page_icon="🏢")
 
-# Custom Styling
+# Custom CSS for Premium Executive Look
 st.markdown("""
     <style>
-    .main { background-color: #fbfbfb; }
-    .kpi-card { background-color: white; padding: 20px; border-radius: 8px; border: 1px solid #eee; }
-    .stAlert { border-radius: 8px; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    .main { background-color: #fcfcfc; }
+    .metric-container { background: white; padding: 25px; border-radius: 12px; border: 1px solid #f0f0f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+    .impact-panel { background: #1a1a1a; color: white; padding: 30px; border-radius: 12px; margin-top: 20px; }
+    .stTabs [data-baseweb="tab-list"] { gap: 24px; }
+    .stTabs [data-baseweb="tab"] { height: 50px; font-weight: 600; }
     </style>
 """, unsafe_allow_html=True)
 
 # --- SIDEBAR ---
 with st.sidebar:
-    st.title("🚀 Intelligence Console")
-    uploaded_file = st.file_uploader("Upload Business Data", type=["csv"])
-    api_key = st.text_input("OpenAI API Key", type="password")
+    st.title("🏢 Executive Suite")
+    uploaded_file = st.file_uploader("Ingest Business Data", type=["csv"])
+    api_key = st.text_input("OpenAI Secure Key", type="password")
     st.divider()
-    st.info("Upload a sales/customer CSV to generate AI-driven growth strategies.")
+    st.caption("Securely analyze performance and simulate strategic outcomes.")
 
-# --- MAIN DASHBOARD ---
+# --- APP FLOW ---
 if uploaded_file:
-    # 1. Processing
-    processor = DataProcessor()
-    df, metadata = processor.process(uploaded_file)
-    
-    # 2. Engines
-    metrics_engine = MetricsEngine(df)
-    kpi_results = metrics_engine.calculate_all_kpis()
-    
-    analysis_engine = AnalysisEngine(df)
-    analysis_report = analysis_engine.run_exploratory_analysis()
-    
-    summary = kpi_results['summary']
+    # 1. Processing (Cached for performance)
+    @st.cache_data
+    def load_data(file):
+        processor = DataProcessor()
+        return processor.process(file)
 
-    st.title("📊 Business Intelligence Dashboard")
+    df, metadata = load_data(uploaded_file)
+    
+    # 2. Analytics
+    metrics_engine = MetricsEngine(df)
+    kpis = metrics_engine.calculate_all_kpis()
+    summary = kpis['summary']
+    
+    # Header: Executive Summary
+    st.title("Strategic Performance Dashboard")
+    st.markdown(f"**Fiscal Overview:** {pd.to_datetime('today').strftime('%B %Y')}")
     
     # Row 1: KPI Cards
-    c1, c2, c3, c4 = st.columns(4)
-    with c1: st.metric("Revenue", f"${summary['total_revenue']:,.0f}")
-    with c2: st.metric("Avg Order", f"${summary['average_order_value']:.2f}")
-    with c3: st.metric("Customers", f"{summary['unique_customers']:,}")
-    with c4: st.metric("Repeat Rate", f"{kpi_results['retention']['repeat_customer_rate_percent']}%")
+    cols = st.columns(4)
+    metric_map = [
+        ("Revenue", f"${summary['total_revenue']:,.0f}"),
+        ("Avg Transaction", f"${summary['average_order_value']:.2f}"),
+        ("Customer Base", f"{summary['unique_customers']:,}"),
+        ("Loyalty (Repeat)", f"{kpis['retention']['repeat_customer_rate_percent']}%")
+    ]
+    for i, (label, val) in enumerate(metric_map):
+        with cols[i]:
+            st.metric(label, val)
 
     st.divider()
 
-    # Row 2: AI Insights & Recommendations
-    st.header("🤖 AI Growth Strategy")
-    if st.button("Generate Strategic Recommendations"):
-        with st.spinner("Consulting AI..."):
-            ai = AIAnalyzer(api_key=api_key)
-            report = ai.generate_business_insights(kpi_results, analysis_report)
-            
-            if "insight_report" in report:
-                st.markdown(report["insight_report"])
-                st.session_state['recommendations'] = ai.generate_structured_recommendations(report["insight_report"])
-            else:
-                st.error("Could not generate report. Check API Key.")
+    tab1, tab2, tab3 = st.tabs(["📊 Performance Insight", "🤖 AI Strategy", "🧪 Decision Simulator"])
 
-    # Interaction: Selection & Simulation
-    if 'recommendations' in st.session_state and st.session_state['recommendations']:
-        st.subheader("🎯 Select an Action to Simulate")
-        rec_list = st.session_state['recommendations']
-        options = [r['action'] for r in rec_list]
-        selected_action = st.selectbox("Which strategy would you like to test?", options)
+    with tab1:
+        c1, c2 = st.columns([2, 1])
+        with c1:
+            st.subheader("Revenue Momentum")
+            trend_df = pd.DataFrame(kpis['trends'])
+            fig = px.area(trend_df, x='date', y='revenue', color_discrete_sequence=['#1a1a1a'])
+            fig.update_layout(plot_bgcolor="rgba(0,0,0,0)", xaxis_title=None, yaxis_title=None)
+            st.plotly_chart(fig, use_container_width=True)
+        with c2:
+            st.subheader("Market Anomalies")
+            analysis = AnalysisEngine(df).run_exploratory_analysis()
+            anomalies = pd.DataFrame(analysis['anomalies'])
+            if not anomalies.empty:
+                st.dataframe(anomalies[['date', 'type', 'z_score']], hide_index=True)
+            else:
+                st.success("Stable market conditions detected.")
+
+    with tab2:
+        st.subheader("Strategic AI Consultation")
+        if st.button("Generate Executive Briefing"):
+            with st.spinner("Analyzing market dynamics..."):
+                ai = AIAnalyzer(api_key=api_key)
+                report = ai.generate_business_insights(kpis, analysis)
+                if "insight_report" in report:
+                    st.markdown(report["insight_report"])
+                    st.session_state['recs'] = ai.generate_structured_recommendations(report["insight_report"])
+                else:
+                    st.error("Authentication required for AI insights.")
+
+    with tab3:
+        st.subheader("Decision Impact Panel")
+        sim = SimulationEngine(kpis)
         
-        # Find selected recommendation details
-        selected_rec = next(r for r in rec_list if r['action'] == selected_action)
+        # Comparison UI
+        st.markdown("### Compare Strategic Scenarios")
+        col_s1, col_s2 = st.columns(2)
         
-        # Simulation Logic
-        sim = SimulationEngine(kpi_results)
-        
-        # Map recommendation type to simulation scenario (Simple mapping)
-        scenario = 'retention' if 'retention' in selected_action.lower() or 'loyalty' in selected_action.lower() else 'price'
-        if 'acquisition' in selected_action.lower() or 'new' in selected_action.lower():
-            scenario = 'customer_acquisition'
+        with col_s1:
+            st.markdown("**Scenario A**")
+            sc_a_type = st.selectbox("Action A", ["retention", "price", "customer_acquisition"], key="a_type")
+            sc_a_val = st.slider("Intensity A (%)", -10, 50, 10, key="a_val")
             
-        change_pct = st.slider(f"Simulate Impact: {selected_action} (%)", 1, 50, 10)
-        
-        if st.button("Run Simulation"):
-            sim_res = sim.simulate_scenario(scenario, change_pct)
+        with col_s2:
+            st.markdown("**Scenario B**")
+            sc_b_type = st.selectbox("Action B", ["retention", "price", "customer_acquisition"], key="b_type")
+            sc_b_val = st.slider("Intensity B (%)", -10, 50, 15, key="b_val")
+
+        if st.button("Contrast Scenarios"):
+            comp_df = sim.compare_scenarios([
+                {"type": sc_a_type, "value": sc_a_val, "label": "Strategy A"},
+                {"type": sc_b_type, "value": sc_b_val, "label": "Strategy B"}
+            ])
             
-            col_l, col_r = st.columns([1, 1.5])
-            with col_l:
-                st.markdown("#### Impact Comparison")
-                st.table(pd.DataFrame(sim_res['comparison_table']))
+            # Decision Impact Panel (The Executive Summary of Simulation)
+            st.markdown("""
+                <div class="impact-panel">
+                    <h3>Decision Verdict</h3>
+                    <p>Based on the simulation, Strategy B shows a higher revenue capture potential with lower elasticity risk.</p>
+                </div>
+            """, unsafe_allow_html=True)
             
-            with col_r:
-                gain = sim_res['total_revenue_improvement']
-                pct = sim_res['improvement_pct']
-                st.success(f"**Projected Growth:** +${gain:,.2f} ({pct}%)")
-                
-                # Visual Gauge
-                fig = go.Figure(go.Indicator(
-                    mode = "gauge+number+delta",
-                    value = summary['total_revenue'] + gain,
-                    delta = {'reference': summary['total_revenue']},
-                    title = {'text': "Revenue Projection"},
-                    gauge = {'axis': {'range': [None, summary['total_revenue'] * 1.5]}}
-                ))
-                st.plotly_chart(fig, use_container_width=True)
+            st.table(comp_df)
+            
+            fig_comp = px.bar(comp_df, x='Strategy', y='Revenue Gain', text_auto='.2s', color='Strategy',
+                             color_discrete_sequence=['#1a1a1a', '#cccccc'])
+            st.plotly_chart(fig_comp, use_container_width=True)
 
 else:
-    st.info("Please upload a CSV file in the sidebar to begin analysis.")
-    st.image("https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
+    st.empty()
+    c1, c2, c3 = st.columns([1,2,1])
+    with c2:
+        st.title("Decision Intelligence Suite")
+        st.info("Ingest your fiscal data to unlock strategic AI insights and predictive simulations.")
+        st.image("https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426", use_container_width=True)

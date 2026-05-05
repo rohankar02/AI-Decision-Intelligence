@@ -46,6 +46,22 @@ class SimulationEngine:
 
         return self._format_results(before, after)
 
+    def compare_scenarios(self, scenarios: List[Dict[str, Any]]) -> pd.DataFrame:
+        """
+        Runs multiple simulations and returns a comparative dataframe.
+        Expected format: [{'type': 'retention', 'value': 10, 'label': 'Strategy A'}]
+        """
+        results = []
+        for s in scenarios:
+            res = self.simulate_scenario(s['type'], s['value'])
+            results.append({
+                "Strategy": s['label'],
+                "Simulated Revenue": res['comparison_table'][0]['After'],
+                "Revenue Gain": res['total_revenue_improvement'],
+                "Growth (%)": res['improvement_pct']
+            })
+        return pd.DataFrame(results)
+
     def _format_results(self, before: Dict, after: Dict) -> Dict[str, Any]:
         """Calculates deltas and formats the comparison table."""
         comparison = []

@@ -1,50 +1,50 @@
-# 🚀 AI-Powered Decision Intelligence System
+# 🏢 AI-Powered Executive Decision Suite
 
-An enterprise-grade analytical platform that transforms raw business data into strategic growth recommendations using LLMs and mathematical simulations.
+An enterprise-grade analytical platform that transforms raw fiscal data into strategic growth through LLM-driven narratives and comparative predictive simulations.
 
-## 🌟 Key Features
-- **Automated Data Engine**: Intelligent CSV cleaning and feature detection (Numeric, Categorical, Time-Series).
-- **KPI Analytics Engine**: Automated calculation of core business health metrics (Revenue, Churn, AOV).
-- **AI Strategic Consultant**: Leverages GPT-4 to generate narrative insights and prioritized business actions.
-- **What-If Simulation Lab**: Mathematical modeling of business decisions (e.g., Price Elasticity, Retention ROI).
-- **Interactive Dashboard**: High-fidelity Streamlit UI with Plotly visualizations.
+**[🚀 View Live Demo](https://ai-decision-intelligence-d8dpvcydmfnamlgoz7gkm2.streamlit.app)**
 
-## 🏗 Architecture
-The system follows **Clean Architecture** principles to ensure modularity and scalability:
-- `src/data_engine`: Data ingestion and preprocessing.
+## 🌟 The Core Value
+Business leaders often struggle with "Data Fatigue"—having plenty of numbers but no clear path forward. This system acts as a **Force Multiplier** by automating the journey from raw CSV data to a final strategic verdict.
+
+---
+
+## 📖 Case Study: "The Retention Pivot"
+Imagine a retail business seeing steady revenue growth but realizing their marketing costs are skyrocketing.
+
+1.  **The Detection**: The `AnalysisEngine` flags a 12% drop in repeat customer rate despite overall sales being up.
+2.  **The AI Insight**: The `AIAnalyzer` identifies that high-value customers in the 'Electronics' segment are leaving after a single purchase.
+3.  **The Simulation**: The manager uses the `Simulation Lab` to contrast two moves:
+    -   **Strategy A**: A 10% price drop to attract new users.
+    -   **Strategy B**: A targeted loyalty program for the top 10% of customers.
+4.  **The Verdict**: The system shows that **Strategy B** yields a **15% higher ROI** with significantly lower risk, saving the company from a costly price war.
+
+---
+
+## 🛠 Key Features
+- **Strategic AI Consultation**: Generates narrative executive briefings using GPT-4.
+- **Decision Simulator**: High-fidelity "Before vs. After" modeling with side-by-side strategy comparison.
+- **Automated Data Engine**: Intelligent CSV cleaning and feature detection.
+- **Market Anomaly Detection**: Uses Z-score statistical modeling to flag unusual market shifts.
+
+## 🏗 System Architecture
+Built with **Clean Architecture** for modularity and scalability:
+- `src/data_engine`: Intelligent ingestion and preprocessing.
 - `src/analytics`: Core statistical and KPI logic.
-- `src/ai_module`: LLM integration and prompt engineering.
+- `src/ai_module`: LLM-driven strategic reasoning.
 - `src/simulation`: Predictive mathematical modeling.
-- `src/utils`: Centralized logging and custom exception handling.
-
-## 🛠 Tech Stack
-- **Language**: Python 3.9+
-- **Data**: Pandas, Numpy, Scikit-learn
-- **AI**: OpenAI GPT-4 API
-- **UI**: Streamlit, Plotly
-- **Observability**: Rotating File Logging, Custom Exceptions
+- `src/utils`: Centralized observability and robust error frameworks.
 
 ## 🚀 Quick Start
-1. **Clone the repository**:
+1. **Clone & Install**:
    ```bash
-   git clone https://github.com/yourusername/decision-intelligence-sys.git
-   ```
-2. **Install dependencies**:
-   ```bash
+   git clone https://github.com/rohankar02/AI-Decision-Intelligence.git
    pip install -r requirements.txt
    ```
-3. **Set your API Key**:
-   Create a `.env` file or export your key:
-   ```bash
-   export OPENAI_API_KEY='your-key-here'
-   ```
-4. **Run the application**:
+2. **Run Locally**:
    ```bash
    streamlit run app.py
    ```
 
-## 📊 Sample Insights
-> "The system identified a 15% drop in retention within the 'Electronics' segment and simulated that a 5% loyalty boost would recover $120k in projected annual revenue."
-
 ---
-*Developed for strategic business optimization.*
+*Built to empower data-driven leadership.*
